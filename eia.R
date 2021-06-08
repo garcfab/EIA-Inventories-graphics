@@ -3,7 +3,11 @@ library(dplyr)
 library(lubridate)
 library(readxl)
 library(ggpubr)
-eia_set_key("a6c041db57f81bf2f03f2c0028ccd432", store = c("env", "options", "sysenv"))
+
+fileName <- 'eiakey.txt'
+
+
+eia_set_key(readChar(fileName, file.info(fileName)$size), store = c("env", "options", "sysenv"))
 setwd("C:/Users/fabian/Ecopetrol S.A/PPY - Documentos/Inventarios/Inventarios EE.UU")
 #  714755 Petroleum
   #  714759 Refining and Processing
@@ -311,7 +315,7 @@ production <- production2
 
 g_production <- production %>% filter(year==2021) %>%  ggplot(aes(x=week)) + geom_line(aes(y = value/1000, color = "2021"), size = 1.3)  + geom_ribbon(aes(ymin = min/1000, ymax = max/1000), fill="blue", alpha=0.15) +
   geom_line(aes( y = promedio/1000, color = "Promedio '16-'20") , linetype = "dotted", size = 1.3 ) + geom_line(aes(y = value_previo/1000,  colour = "2020"), size = 1.3) + theme_bw() + ylim(6,14) + theme(axis.title.y = element_blank())+
-  ggtitle("Producción de crudo (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
+  ggtitle("Producci?n de crudo (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
                                                                                                               breaks = c("2020", "Promedio '16-'20", "2021"),
                                                                                                               values = c("#49DB31", "#7B7B7B", "#F7032C")) + theme(legend.position="bottom") 
 
@@ -359,7 +363,7 @@ crude_imp <- crude_imp2
 
 g_cude_imp <- crude_imp %>% filter(year==2021) %>%  ggplot(aes(x=week)) + geom_line(aes(y = value/1000, color = "2021"), size = 1.3)  + geom_ribbon(aes(ymin = min/1000, ymax = max/1000), fill="blue", alpha=0.15) +
   geom_line(aes( y = promedio/1000, color = "Promedio '16-'20") , linetype = "dotted", size = 1.3 ) + geom_line(aes(y = value_previo/1000,  colour = "2020"), size = 1.3) + theme_bw() + ylim(4,10) + theme(axis.title.y = element_blank())+
-  ggtitle("Importación de crudo (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
+  ggtitle("Importaci?n de crudo (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
                                                                                                               breaks = c("2020", "Promedio '16-'20", "2021"),
                                                                                                               values = c("#49DB31", "#7B7B7B", "#F7032C")) + theme(legend.position="bottom") 
 
@@ -408,7 +412,7 @@ crude_exp <- crude_exp2
 
 g_crude_exp <- crude_exp %>% filter(year==2021) %>%  ggplot(aes(x=week)) + geom_line(aes(y = value/1000, color = "2021"), size = 1.3)  + geom_ribbon(aes(ymin = min/1000, ymax = max/1000), fill="blue", alpha=0.15) +
   geom_line(aes( y = promedio/1000, color = "Promedio '16-'20") , linetype = "dotted", size = 1.3 ) + geom_line(aes(y = value_previo/1000,  colour = "2020"), size = 1.3) + theme_bw() + ylim(0,5) + theme(axis.title.y = element_blank())+
-  ggtitle("Exportación de crudo (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
+  ggtitle("Exportaci?n de crudo (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
                                                                                                                breaks = c("2020", "Promedio '16-'20", "2021"),
                                                                                                                values = c("#49DB31", "#7B7B7B", "#F7032C")) + theme(legend.position="bottom") 
 
@@ -462,7 +466,7 @@ crude_ref_int <- crude_ref_int2
 
 g_ref_int <- crude_ref_int %>% filter(year==2021) %>%  ggplot(aes(x=week)) + geom_line(aes(y = value/1000, color = "2021"), size = 1.3)  + geom_ribbon(aes(ymin = min/1000, ymax = max/1000), fill="blue", alpha=0.15) +
   geom_line(aes( y = promedio/1000, color = "Promedio '16-'20") , linetype = "dotted", size = 1.3 ) + geom_line(aes(y = value_previo/1000,  colour = "2020"), size = 1.3) + theme_bw() + ylim(9,19) + theme(axis.title.y = element_blank())+
-  ggtitle("Corridas de refinación (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
+  ggtitle("Corridas de refinaci?n (mmbd)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
                                                                                                                breaks = c("2020", "Promedio '16-'20", "2021"),
                                                                                                                values = c("#49DB31", "#7B7B7B", "#F7032C")) + theme(legend.position="bottom") 
 
@@ -515,7 +519,7 @@ crude_spr <- crude_spr2
 
 g_crude_spr <- crude_spr %>% filter(year==2021) %>%  ggplot(aes(x=week)) + geom_line(aes(y = value/1000, color = "2021"), size = 1.3)  + geom_ribbon(aes(ymin = min/1000, ymax = max/1000), fill="blue", alpha=0.15) +
   geom_line(aes( y = promedio/1000, color = "Promedio '16-'20") , linetype = "dotted", size = 1.3 ) + geom_line(aes(y = value_previo/1000,  colour = "2020"), size = 1.3) + theme_bw() + ylim(600,700) + theme(axis.title.y = element_blank())+
-  ggtitle("Reservas estratégicas (mmb)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
+  ggtitle("Reservas estrat?gicas (mmb)") + theme(plot.title = element_text(hjust = 0.5)) + scale_colour_manual("", 
                                                                                                                  breaks = c("2020", "Promedio '16-'20", "2021"),
                                                                                                                  values = c("#49DB31", "#7B7B7B", "#F7032C")) + theme(legend.position="bottom") 
 
@@ -582,7 +586,7 @@ figure <- ggarrange(g_crude_stocks, g_cushing, g_production, g_crude_exp, g_cude
 
 figure <- annotate_figure(figure,
                 top = text_grob("Mercado de Crudo", color = "#4E01A8", face = "bold", size = 20),
-                bottom = text_grob("Fuente: EIA. Cálculos PPY.", color = "#595959",
+                bottom = text_grob("Fuente: EIA. C?lculos PPY.", color = "#595959",
                                     size = 8, hjust = 1, x = 1))
 
 figure
@@ -1108,7 +1112,7 @@ figure2 <- ggarrange(g_productos, g_gasolina_stocks, g_destilados_stocks, g_prod
                     common.legend = TRUE, legend = "bottom")
 figure2 <- annotate_figure(figure2,
                           top = text_grob("Mercado de Productos", color = "#4E01A8", face = "bold", size = 20),
-                          bottom = text_grob("Fuente: EIA. Cálculos PPY.", color = "#595959",
+                          bottom = text_grob("Fuente: EIA. C?lculos PPY.", color = "#595959",
                                              size = 8, hjust = 1, x = 1))
 
 figure2
@@ -1547,7 +1551,7 @@ figure3 <- ggarrange(g_resid_stocks, g_jet_stocks, g_prop_stocks, g_red_supplied
 
 figure3 <- annotate_figure(figure3,
                            top = text_grob("Mercado de Productos (cont.)", color = "#4E01A8", face = "bold", size = 20),
-                           bottom = text_grob("Fuente: EIA. Cálculos PPY.", color = "#595959",
+                           bottom = text_grob("Fuente: EIA. C?lculos PPY.", color = "#595959",
                                               size = 8, hjust = 1, x = 1))
 
 figure3
